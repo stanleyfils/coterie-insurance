@@ -1,7 +1,24 @@
 import React, { Component } from "react";
 import axios from "axios";
+// import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+// import AppBar from "material-ui/AppBar";
+// import TextField from "material-ui/TextField";
+// import RaisedButton from "material-ui/RaisedButton";
+// import SelectField from "material-ui/SelectField";
 
-export class BusinessInfo extends Component {
+// const policyTypes = [
+//   "General Liability",
+//   "Professional Liability",
+//   "Business Owners Policy",
+// ];
+
+// Validate email if you're feeling fancy fancy
+// function validateEmail(contactEmail) {
+//   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//   return re.test(contactEmail);
+// }
+
+export class QuoteForm extends Component {
   state = {
     businessName: "",
     contactEmail: "",
@@ -14,7 +31,7 @@ export class BusinessInfo extends Component {
         zip: "",
       },
     ],
-    response: null,
+    // response: null,
   };
 
   submit = (event) => {
@@ -25,33 +42,23 @@ export class BusinessInfo extends Component {
         this.state,
         {
           headers: {
-            Authorization: "token 73920c6f-d530-419c-87b3-4f4762e05e9d",
+            authorization: "token 73920c6f-d530-419c-87b3-4f4762e05e9d",
           },
         }
       )
       .then((newBusiness) => {
-        console.log({ newBusiness });
         this.setState({
-          businessName: "",
-          contactEmail: "",
-          grossAnnualSales: "5e4",
-          annualPayroll: "5e4",
-          numEmployees: null,
-          industryId: "10537",
-          locations: [
-            {
-              zip: "",
-            },
-          ],
-          response: newBusiness.data,
+          ...newBusiness.data,
         });
+        console.log(newBusiness.data.availablePolicyTypes);
+        console.log(this.state);
       })
       .catch((err) => console.log({ err }));
   };
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    // only one condition required because it's the only nested objet in the state
+    // only one condition required because it's the only nested object in the state
     if (name === "locations") {
       return this.setState((prevState) => ({
         ...prevState,
@@ -59,8 +66,31 @@ export class BusinessInfo extends Component {
       }));
     }
     this.setState({ [name]: value });
-    console.log(this.state);
+    // console.log(this.state);
   };
+
+  sales = [
+    { value: "5e4", profit: "$50k" },
+    { value: "5e4", profit: "$75k" },
+    { value: "5e4", profit: "$100k" },
+    { value: "5e4", profit: "$150k" },
+    { value: "5e4", profit: "$200k" },
+  ];
+
+  payroll = [
+    { value: "5e4", salaries: "$50k" },
+    { value: "7e4", salaries: "$75k" },
+    { value: "1e5", salaries: "$100k" },
+    { value: "15e4", salaries: "$150k" },
+    { value: "2e5", salaries: "$200k" },
+  ];
+
+  jobs = [
+    { value: "10537", career: "Plumber" },
+    { value: "10391", career: "Software Developer" },
+    { value: "10415", career: "Lawyer" },
+    { value: "10109", career: "Handyman" },
+  ];
 
   render() {
     return (
@@ -89,11 +119,12 @@ export class BusinessInfo extends Component {
           <label>
             Annual Sales:
             <select onChange={this.handleChange} name="grossAnnualSales">
-              <option value={5e4}>50k</option>
-              <option value={7e4}>75k</option>
-              <option value={1e5}>100k</option>
-              <option value={15e4}>150k</option>
-              <option value={2e5}>200k</option>
+              {this.sales.map(({ value, profit }, i) => (
+                // key={`${value}-${i} is required for arrays. (find the correct index)
+                <option value={value} key={`${value}-${i}`}>
+                  {profit}
+                </option>
+              ))}
             </select>
           </label>
           <br />
@@ -101,11 +132,11 @@ export class BusinessInfo extends Component {
           <label>
             Annual Payroll:
             <select onChange={this.handleChange} name="annualPayroll">
-              <option value={5e4}>50k</option>
-              <option value={7e4}>75k</option>
-              <option value={1e5}>100k</option>
-              <option value={15e4}>150k</option>
-              <option value={2e5}>200k</option>
+              {this.payroll.map(({ value, salaries }, i) => (
+                <option value={value} key={`${value}-${i}`}>
+                  {salaries}
+                </option>
+              ))}
             </select>
           </label>
           <br />
@@ -122,10 +153,11 @@ export class BusinessInfo extends Component {
           <label>
             Industry:
             <select onChange={this.handleChange} name="industryId">
-              <option value="10537">Plumber</option>
-              <option value="10391">Software Developer</option>
-              <option value="10415">Lawyer</option>
-              <option value="10109">Handyman</option>
+              {this.jobs.map(({ value, career }, i) => (
+                <option value={value} key={`${value}-${i}`}>
+                  {career}
+                </option>
+              ))}
             </select>
           </label>
           <br />
@@ -146,4 +178,4 @@ export class BusinessInfo extends Component {
   }
 }
 
-export default BusinessInfo;
+export default QuoteForm;

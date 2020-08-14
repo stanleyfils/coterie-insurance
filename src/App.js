@@ -1,15 +1,15 @@
 import React from "react";
-// import configureStore from "./store/configureStore";
-// import { Provider } from "react-redux";
-import { BusinessInfo } from "./components/BusinessInfo";
+import configureStore from "./store/configureStore";
+import { Provider } from "react-redux";
+import { QuoteForm } from "./components/QuoteForm";
 
-// const store = configureStore();
+const store = configureStore();
 
 function App() {
   return (
-    // <Provider store={store}>
-    <BusinessInfo />
-    // </Provider>
+    <Provider store={store}>
+      <QuoteForm />
+    </Provider>
   );
 }
 

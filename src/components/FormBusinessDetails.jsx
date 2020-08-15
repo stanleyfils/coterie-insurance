@@ -5,6 +5,12 @@ import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
 
+const styles = {
+  button: {
+    margin: 15,
+  },
+};
+
 export class FormBusinessDetails extends Component {
   continue = (e) => {
     e.preventDefault();
@@ -56,11 +62,5 @@ export class FormBusinessDetails extends Component {
     );
   }
 }
-
-const styles = {
-  button: {
-    margin: 15,
-  },
-};
 
 export default FormBusinessDetails;

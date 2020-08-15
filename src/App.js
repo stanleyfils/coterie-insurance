@@ -1,16 +1,15 @@
-import React from "react";
-import configureStore from "./store/configureStore";
-import { Provider } from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { QuoteForm } from "./components/QuoteForm";
 
-const store = configureStore();
-
-function App() {
-  return (
-    <Provider store={store}>
-      <QuoteForm />
-    </Provider>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <QuoteForm />
+      </div>
+    );
+  }
 }
 
-export default App;
+export default connect()(App);

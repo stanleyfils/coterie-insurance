@@ -1,16 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-// import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-// import AppBar from "material-ui/AppBar";
-// import TextField from "material-ui/TextField";
-// import RaisedButton from "material-ui/RaisedButton";
-// import SelectField from "material-ui/SelectField";
-
-// const policyTypes = [
-//   "General Liability",
-//   "Professional Liability",
-//   "Business Owners Policy",
-// ];
+import FormBusinessData from "./FormBusinessData";
+import FormBusinessDetails from "./FormBusinessDetails";
+import ConfirmInfo from "./ConfirmInfo";
+import Success from "./Success";
 
 // Validate email if you're feeling fancy fancy
 // function validateEmail(contactEmail) {
@@ -20,6 +13,7 @@ import axios from "axios";
 
 export class QuoteForm extends Component {
   state = {
+    Step: 1,
     businessName: "",
     contactEmail: "",
     grossAnnualSales: "5e4",
@@ -31,32 +25,30 @@ export class QuoteForm extends Component {
         zip: "",
       },
     ],
-    // response: null,
   };
 
-  submit = (event) => {
-    event.preventDefault();
-    axios
-      .post(
-        "https://api-sandbox.coterieinsurance.com/v1/commercial/applications",
-        this.state,
-        {
-          headers: {
-            authorization: "token 73920c6f-d530-419c-87b3-4f4762e05e9d",
-          },
-        }
-      )
-      .then((newBusiness) => {
-        this.setState({
-          ...newBusiness.data,
-        });
-        console.log(newBusiness.data.availablePolicyTypes);
-        console.log(this.state);
-      })
-      .catch((err) => console.log({ err }));
+  //   Proceed to next step
+  nextStep = () => {
+    const { step } = this.state;
+    this.setState({
+      step: step + 1,
+    });
   };
 
-  handleChange = (event) => {
+  //   Go back to previous step
+  prevStep = () => {
+    const { step } = this.state;
+    this.setState({
+      step: step - 1,
+    });
+  };
+
+  // Handle chnaged fields
+  handleChange = (input) => (e) => {
+    this.setState({ [input]: e.target.value });
+  };
+
+  handleLocationChange = (event) => {
     const { name, value } = event.target;
     // only one condition required because it's the only nested object in the state
     if (name === "locations") {
@@ -68,6 +60,28 @@ export class QuoteForm extends Component {
     this.setState({ [name]: value });
     // console.log(this.state);
   };
+
+  //   submit = (event) => {
+  //     event.preventDefault();
+  //     axios
+  //       .post(
+  //         "https://api-sandbox.coterieinsurance.com/v1/commercial/applications",
+  //         this.state,
+  //         {
+  //           headers: {
+  //             authorization: "token 73920c6f-d530-419c-87b3-4f4762e05e9d",
+  //           },
+  //         }
+  //       )
+  //       .then((newBusiness) => {
+  //         this.setState({
+  //           ...newBusiness.data,
+  //         });
+  //         console.log(newBusiness.data.availablePolicyTypes);
+  //         console.log(this.state);
+  //       })
+  //       .catch((err) => console.log({ err }));
+  //   };
 
   sales = [
     { value: "5e4", profit: "$50k" },
@@ -93,88 +107,56 @@ export class QuoteForm extends Component {
   ];
 
   render() {
-    return (
-      <div>
-        <form onSubmit={this.submit}>
-          <label>
-            Business Name:
-            <input
-              type="text"
-              name="businessName"
-              value={this.state.businessName}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label>
-            Contact Email:
-            <input
-              type="text"
-              name="contactEmail"
-              value={this.state.contactEmail}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label>
-            Annual Sales:
-            <select onChange={this.handleChange} name="grossAnnualSales">
-              {this.sales.map(({ value, profit }, i) => (
-                // key={`${value}-${i} is required for arrays. (find the correct index)
-                <option value={value} key={`${value}-${i}`}>
-                  {profit}
-                </option>
-              ))}
-            </select>
-          </label>
-          <br />
+    const { step } = this.state;
+    const {
+      businessName,
+      contactEmail,
+      grossAnnualSales,
+      annualPayroll,
+      numEmployees,
+      industryId,
+      locations,
+    } = this.state;
+    const values = {
+      businessName,
+      contactEmail,
+      grossAnnualSales,
+      annualPayroll,
+      numEmployees,
+      industryId,
+      locations,
+    };
 
-          <label>
-            Annual Payroll:
-            <select onChange={this.handleChange} name="annualPayroll">
-              {this.payroll.map(({ value, salaries }, i) => (
-                <option value={value} key={`${value}-${i}`}>
-                  {salaries}
-                </option>
-              ))}
-            </select>
-          </label>
-          <br />
-          <label>
-            Number of Employees:
-            <input
-              type="text"
-              name="numEmployees"
-              defaultValue={this.state.numEmployees}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label>
-            Industry:
-            <select onChange={this.handleChange} name="industryId">
-              {this.jobs.map(({ value, career }, i) => (
-                <option value={value} key={`${value}-${i}`}>
-                  {career}
-                </option>
-              ))}
-            </select>
-          </label>
-          <br />
-          <label>
-            Zip Code:
-            <input
-              type="text"
-              name="locations"
-              value={this.state.locations[0].zip}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-    );
+    switch (step) {
+      case 1:
+        return (
+          <FormBusinessDetails
+            nextStep={this.nextStep}
+            handleChange={this.handleChange}
+            values={values}
+          />
+        );
+      case 2:
+        return (
+          <FormBusinessData
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            handleChange={this.handleChange}
+            values={values}
+          />
+        );
+      case 3:
+        return (
+          <ConfirmInfo
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            values={values}
+          />
+        );
+      case 4:
+        return <Success />;
+      default:
+    }
   }
 }
 

@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
-// const policyTypes = [
-//   "General Liability",
-//   "Professional Liability",
-//   "Business Owners Policy",
-// ];
+const policyTypes = [
+  "General Liability",
+  "Professional Liability",
+  "Business Owners Policy",
+];
 
 export class Success extends Component {
   continue = (e) => {
@@ -25,7 +25,7 @@ export class Success extends Component {
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar title="Congratulations!" />
-          <h1>You have successfully completed your application.</h1>
+          <h1>You have successfully completed your application!</h1>
         </React.Fragment>
       </MuiThemeProvider>
     );

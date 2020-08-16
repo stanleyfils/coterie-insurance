@@ -56,7 +56,7 @@ export class FormBusinessDetails extends Component {
           defaultValue={values.industryId}
         >
           {this.jobs.map((job, i) => (
-            <MenuItem key={i} value={job.value || ""}>
+            <MenuItem key={i} value={job.career || ""}>
               {job.career}
             </MenuItem>
           ))}

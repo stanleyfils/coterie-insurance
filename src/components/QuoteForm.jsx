@@ -61,29 +61,6 @@ export class QuoteForm extends Component {
       }));
     }
     this.setState({ [name]: value });
-    // console.log(this.state);
-  };
-
-  submit = (event) => {
-    event.preventDefault();
-    axios
-      .post(
-        "https://api-sandbox.coterieinsurance.com/v1/commercial/applications",
-        this.state,
-        {
-          headers: {
-            authorization: "token 73920c6f-d530-419c-87b3-4f4762e05e9d",
-          },
-        }
-      )
-      .then((newBusiness) => {
-        this.setState({
-          ...newBusiness.data,
-        });
-        console.log(newBusiness.data.availablePolicyTypes);
-        console.log(this.state);
-      })
-      .catch((err) => console.log({ err }));
   };
 
   render() {

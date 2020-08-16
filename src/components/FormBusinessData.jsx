@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-// import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import SelectField from "material-ui/SelectField";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import { connect } from "react-redux";
 import { storeBusinessData } from "../authStore/actions/businessDataActions";
 import { bindActionCreators } from "redux";
@@ -23,13 +23,13 @@ export class FormBusinessData extends Component {
 
   sales = [
     { value: "5e4", profit: "$50k" },
-    { value: "5e4", profit: "$75k" },
-    { value: "5e4", profit: "$100k" },
-    { value: "5e4", profit: "$150k" },
-    { value: "5e4", profit: "$200k" },
+    { value: "7e4", profit: "$75k" },
+    { value: "1e5", profit: "$100k" },
+    { value: "15e4", profit: "$150k" },
+    { value: "2e5", profit: "$200k" },
   ];
 
-  payroll = [
+  payrolls = [
     { value: "5e4", salaries: "$50k" },
     { value: "7e4", salaries: "$75k" },
     { value: "1e5", salaries: "$100k" },
@@ -50,34 +50,30 @@ export class FormBusinessData extends Component {
           defaultValue={values.numEmployees}
         />
         <br />
-
-        <SelectField
+        <Select
           name="grossAnnualSales"
-          hintText="Enter Annual Gross Sales"
-          floatingLabelText="AnnualGross Sales"
           onChange={(e) => handleChange(e)}
           defaultValue={values.grossAnnualSales}
-          // {this.sales.map(({ value, profit }, i) => (
-          //   // key={`${value}-${i} is required for arrays. (find the correct index)
-          //   <option value={value} key={`${value}-${i}`}>
-          //     {profit}
-          //   </option>
-          // ))}
-        />
+        >
+          {this.sales.map((sale, i) => (
+            <MenuItem key={i} value={sale.profit || ""}>
+              {sale.profit}
+            </MenuItem>
+          ))}
+        </Select>
         <br />
 
-        <SelectField
+        <Select
           name="annualPayroll"
-          hintText="Enter Annual Payroll"
-          floatingLabelText="Total Annual Payroll"
           onChange={(e) => handleChange(e)}
           defaultValue={values.annualPayroll}
-          // {this.payroll.map(({ value, salaries }, i) => (
-          //     <option value={value} key={`${value}-${i}`}>
-          //       {salaries}
-          //     </option>
-          //   ))}
-        />
+        >
+          {this.payrolls.map((payroll, i) => (
+            <MenuItem key={i} value={payroll.salaries || ""}>
+              {payroll.salaries}
+            </MenuItem>
+          ))}
+        </Select>
         <br />
         <RaisedButton
           label="Back"

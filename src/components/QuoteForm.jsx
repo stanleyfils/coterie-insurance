@@ -4,6 +4,9 @@ import FormBusinessData from "./FormBusinessData";
 import FormBusinessDetails from "./FormBusinessDetails";
 import ConfirmInfo from "./ConfirmInfo";
 import Success from "./Success";
+// import { businessDetailsActions } from "../authStore/actions/businessDetailsActions";
+// import { businessDataActions } from "../authStore/actions/businessDataActions";
+import { connect } from "react-redux";
 
 // Validate email if you're feeling fancy fancy
 // function validateEmail(contactEmail) {
@@ -16,10 +19,10 @@ export class QuoteForm extends Component {
     step: 1,
     businessName: "",
     contactEmail: "",
-    grossAnnualSales: "5e4",
-    annualPayroll: "5e4",
+    grossAnnualSales: "",
+    annualPayroll: "",
     numEmployees: "",
-    industryId: "10537",
+    industryId: "",
     locations: [
       {
         zip: "",
@@ -94,6 +97,7 @@ export class QuoteForm extends Component {
       industryId,
       locations,
     } = this.state;
+
     const values = {
       businessName,
       contactEmail,
@@ -110,6 +114,7 @@ export class QuoteForm extends Component {
           <FormBusinessDetails
             nextStep={this.nextStep}
             handleChange={this.handleChange}
+            handleLocationChange={this.handleLocationChange}
             values={values}
           />
         );
@@ -138,4 +143,4 @@ export class QuoteForm extends Component {
   }
 }
 
-export default QuoteForm;
+export default connect()(QuoteForm);

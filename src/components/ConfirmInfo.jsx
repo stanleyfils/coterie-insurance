@@ -12,6 +12,11 @@ const styles = {
 };
 
 export class ConfirmInfo extends Component {
+  state = {
+    businessData: {},
+    businessDetails: {},
+  };
+
   submit = (event) => {
     event.preventDefault();
     axios
@@ -55,7 +60,8 @@ export class ConfirmInfo extends Component {
         annualPayroll,
       },
     } = this.props;
-    console.log(locations);
+    console.log("locations");
+    console.log(this.props);
     return (
       <React.Fragment>
         <AppBar title="Confirm Business Information" />
@@ -69,7 +75,10 @@ export class ConfirmInfo extends Component {
           <ListItem primaryText="Industry" secondaryText={industryId} />
         </List>
         <List>
-          <ListItem primaryText="Location Zip Code" secondaryText={locations} />
+          <ListItem
+            primaryText="Location Zip Code"
+            secondaryText={locations[0].zip}
+          />
         </List>
         <List>
           <ListItem
@@ -80,13 +89,13 @@ export class ConfirmInfo extends Component {
         <List>
           <ListItem
             primaryText="Gross Annual Sales"
-            secondaryText={grossAnnualSales}
+            secondaryText={this.props.businessData.grossAnnualSales}
           />
         </List>
         <List>
           <ListItem
             primaryText="Annual Payroll"
-            secondaryText={annualPayroll}
+            secondaryText={this.props.businessData.annualPayroll}
           />
         </List>
         <RaisedButton
@@ -106,11 +115,11 @@ export class ConfirmInfo extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state);
+const mapStateToProps = (store) => {
   return {
-    stateData: state.businessDetailsReducer.businessDetailsData,
+    businessData: store.businessDataReducer.businessData,
+    businessDetails: store.businessDetailsReducer.businessDetails,
   };
 };
 
-export default connect(mapStateToProps)(ConfirmInfo);
+export default connect(mapStateToProps, null)(ConfirmInfo);

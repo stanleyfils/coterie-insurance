@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import SelectField from "material-ui/SelectField";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import { storeBusinessDetails } from "../authStore/actions/businessDetailsActions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -21,12 +22,12 @@ export class FormBusinessDetails extends Component {
     console.log(this.props);
   };
 
-  // jobs = [
-  //   { value: "10537", career: "Plumber" },
-  //   { value: "10391", career: "Software Developer" },
-  //   { value: "10415", career: "Lawyer" },
-  //   { value: "10109", career: "Handyman" },
-  // ];
+  jobs = [
+    { value: "10537", career: "Plumber" },
+    { value: "10391", career: "Software Developer" },
+    { value: "10415", career: "Lawyer" },
+    { value: "10109", career: "Handyman" },
+  ];
 
   render() {
     const { values, handleChange, handleLocationChange } = this.props;
@@ -49,25 +50,24 @@ export class FormBusinessDetails extends Component {
           defaultValue={values.contactEmail}
         />
         <br />
-        <SelectField
+        <Select
           name="industryId"
-          hintText="Enter Industry Type"
-          floatingLabelText="Industry Type"
           onChange={(e) => handleChange(e)}
           defaultValue={values.industryId}
-        />
+        >
+          {this.jobs.map((job, i) => (
+            <MenuItem key={i} value={job.value || ""}>
+              {job.career}
+            </MenuItem>
+          ))}
+        </Select>
         <br />
         <TextField
           name="locations"
           hintText="Enter Zip Code"
           floatingLabelText="Zip Code"
           onChange={(e) => handleLocationChange(e)}
-          defaultValue={values.locations}
-          // {this.jobs.map(({ value, career }, i) => (
-          //   <option value={value} key={`${value}-${i}`}>
-          //     {career}
-          //   </option>
-          // ))}
+          defaultValue={values.locations[0].zip}
         />
         <br />
         <RaisedButton

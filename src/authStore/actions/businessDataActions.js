@@ -18,3 +18,11 @@ export const fetchBusinessData = () => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const storeBusinessData = (data) => {
+  console.log(data);
+  return {
+    type: "STORE_BUSINESS_DATA",
+    data,
+  };
+};

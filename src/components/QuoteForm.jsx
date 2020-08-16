@@ -13,7 +13,7 @@ import Success from "./Success";
 
 export class QuoteForm extends Component {
   state = {
-    Step: 1,
+    step: 1,
     businessName: "",
     contactEmail: "",
     grossAnnualSales: "5e4",
@@ -43,9 +43,9 @@ export class QuoteForm extends Component {
     });
   };
 
-  // Handle chnaged fields
-  handleChange = (input) => (e) => {
-    this.setState({ [input]: e.target.value });
+  // Handle changed fields
+  handleChange = ({ target: { name, value } }) => {
+    this.setState((prev) => ({ ...prev, [name]: value }));
   };
 
   handleLocationChange = (event) => {
@@ -61,50 +61,27 @@ export class QuoteForm extends Component {
     // console.log(this.state);
   };
 
-  //   submit = (event) => {
-  //     event.preventDefault();
-  //     axios
-  //       .post(
-  //         "https://api-sandbox.coterieinsurance.com/v1/commercial/applications",
-  //         this.state,
-  //         {
-  //           headers: {
-  //             authorization: "token 73920c6f-d530-419c-87b3-4f4762e05e9d",
-  //           },
-  //         }
-  //       )
-  //       .then((newBusiness) => {
-  //         this.setState({
-  //           ...newBusiness.data,
-  //         });
-  //         console.log(newBusiness.data.availablePolicyTypes);
-  //         console.log(this.state);
-  //       })
-  //       .catch((err) => console.log({ err }));
-  //   };
-
-  sales = [
-    { value: "5e4", profit: "$50k" },
-    { value: "5e4", profit: "$75k" },
-    { value: "5e4", profit: "$100k" },
-    { value: "5e4", profit: "$150k" },
-    { value: "5e4", profit: "$200k" },
-  ];
-
-  payroll = [
-    { value: "5e4", salaries: "$50k" },
-    { value: "7e4", salaries: "$75k" },
-    { value: "1e5", salaries: "$100k" },
-    { value: "15e4", salaries: "$150k" },
-    { value: "2e5", salaries: "$200k" },
-  ];
-
-  jobs = [
-    { value: "10537", career: "Plumber" },
-    { value: "10391", career: "Software Developer" },
-    { value: "10415", career: "Lawyer" },
-    { value: "10109", career: "Handyman" },
-  ];
+  submit = (event) => {
+    event.preventDefault();
+    axios
+      .post(
+        "https://api-sandbox.coterieinsurance.com/v1/commercial/applications",
+        this.state,
+        {
+          headers: {
+            authorization: "token 73920c6f-d530-419c-87b3-4f4762e05e9d",
+          },
+        }
+      )
+      .then((newBusiness) => {
+        this.setState({
+          ...newBusiness.data,
+        });
+        console.log(newBusiness.data.availablePolicyTypes);
+        console.log(this.state);
+      })
+      .catch((err) => console.log({ err }));
+  };
 
   render() {
     const { step } = this.state;
@@ -156,6 +133,7 @@ export class QuoteForm extends Component {
       case 4:
         return <Success />;
       default:
+        return null;
     }
   }
 }

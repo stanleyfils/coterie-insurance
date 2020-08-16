@@ -12,6 +12,10 @@ export const businessDataReducer = (state = initialState, action) => {
         ...state,
         state: newBusinessData,
       };
+    case "STORE_BUSINESS_DATA":
+      return {
+        businessData: action.data,
+      };
     default:
       return state;
   }

@@ -1,7 +1,9 @@
 const initialState = {
-  grossAnnualSales: "5e4",
-  annualPayroll: "5e4",
-  numEmployees: "",
+  businessData: {
+    grossAnnualSales: "5e4",
+    annualPayroll: "5e4",
+    numEmployees: "",
+  },
 };
 
 export const businessDataReducer = (state = initialState, action) => {

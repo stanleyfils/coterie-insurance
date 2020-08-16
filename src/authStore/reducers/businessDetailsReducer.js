@@ -1,12 +1,14 @@
 const initialState = {
-  businessName: "",
-  contactEmail: "",
-  industryId: "10537",
-  locations: [
-    {
-      zip: "",
-    },
-  ],
+  businessDetails: {
+    businessName: "",
+    contactEmail: "",
+    industryId: "",
+    locations: [
+      {
+        zip: "",
+      },
+    ],
+  },
 };
 
 export const businessDetailsReducer = (state = initialState, action) => {

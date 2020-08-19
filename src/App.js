@@ -2,17 +2,20 @@ import React, { Component } from "react";
 // import { Switch, Route } from "react-router-dom";
 import { QuoteForm } from "./components/QuoteForm";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import HomePage from "../src/components/HomePage";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import AppBar from "material-ui/AppBar";
+import styled from "styled-components";
 // import Container from "react-bootstrap/Container";
 // import Row from "react-bootstrap/Row";
 // import Col from "react-bootstrap/Col";
 
+const Title = styled.h1`
+  color: midnightblue;
+`;
+
 class App extends Component {
   render() {
-    console.log(this.props);
     return (
       <MuiThemeProvider>
         <AppBar
@@ -21,10 +24,21 @@ class App extends Component {
           }
           showMenuIconButton={false}
         />
-        <Card className="card">
-          <Button>Get your Quote</Button>
-        </Card>
-        <HomePage />
+
+        <div>
+          <Title>
+            Simplifying
+            <br /> Insurance for <br /> Businesses
+          </Title>
+        </div>
+
+        <div>
+          <Card className="card">
+            <Button variant="contained" color="primary">
+              Get Your Quote Now
+            </Button>
+          </Card>
+        </div>
       </MuiThemeProvider>
     );
   }

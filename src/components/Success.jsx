@@ -9,12 +9,6 @@ const policyTypes = [
 ];
 
 export class Success extends Component {
-  continue = (e) => {
-    e.preventDefault();
-    // send form info to state here
-    this.props.nextStep();
-  };
-
   back = (e) => {
     e.preventDefault();
     this.props.prevStep();
@@ -26,6 +20,7 @@ export class Success extends Component {
         <React.Fragment>
           <AppBar title="Congratulations!" />
           <h1>You have successfully completed your application!</h1>
+          <h2>`You qualify for ${policyTypes}`</h2>
         </React.Fragment>
       </MuiThemeProvider>
     );

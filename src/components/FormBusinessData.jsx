@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { connect } from "react-redux";
 import { storeBusinessData } from "../authStore/actions/businessDataActions";
 import { bindActionCreators } from "redux";
+import Button from "@material-ui/core/Button";
+import { ListItem } from "material-ui";
 
 export class FormBusinessData extends Component {
   continue = (e) => {
@@ -41,7 +42,7 @@ export class FormBusinessData extends Component {
     const { values, handleChange } = this.props;
     return (
       <React.Fragment>
-        <AppBar title="Enter Business Data" />
+        <AppBar title="Enter Business Data" showMenuIconButton={false} />
         <TextField
           name="numEmployees"
           hintText="Enter Number of Employees"
@@ -56,8 +57,8 @@ export class FormBusinessData extends Component {
           defaultValue={values.grossAnnualSales}
         >
           {this.sales.map((sale, i) => (
-            <MenuItem key={i} value={sale.profit || ""}>
-              {sale.profit}
+            <MenuItem key={i} value={sale.value || ""}>
+              <ListItem>{sale.profit}</ListItem>
             </MenuItem>
           ))}
         </Select>
@@ -69,24 +70,23 @@ export class FormBusinessData extends Component {
           defaultValue={values.annualPayroll}
         >
           {this.payrolls.map((payroll, i) => (
-            <MenuItem key={i} value={payroll.salaries || ""}>
+            <MenuItem key={i} value={payroll.value || ""}>
               {payroll.salaries}
             </MenuItem>
           ))}
         </Select>
         <br />
-        <RaisedButton
-          label="Back"
-          primary={true}
-          style={styles.button}
-          onClick={this.back}
-        />
-        <RaisedButton
-          label="Continue"
-          primary={false}
+        <Button variant="contained" color="primary" onClick={this.back}>
+          Back
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
           style={styles.button}
           onClick={this.continue}
-        />
+        >
+          Continue
+        </Button>
       </React.Fragment>
     );
   }

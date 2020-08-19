@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
 import FormBusinessData from "./FormBusinessData";
 import FormBusinessDetails from "./FormBusinessDetails";
 import ConfirmInfo from "./ConfirmInfo";
 import Success from "./Success";
-// import { businessDetailsActions } from "../authStore/actions/businessDetailsActions";
-// import { businessDataActions } from "../authStore/actions/businessDataActions";
 import { connect } from "react-redux";
 
 // Validate email if you're feeling fancy fancy

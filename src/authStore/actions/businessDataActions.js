@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const addBusinessData = (businessData) => (dispatch) => {
   dispatch({ type: "ADD_BUSINESS_Data", businessData });
 };
@@ -5,16 +7,11 @@ export const addBusinessData = (businessData) => (dispatch) => {
 const URL =
   "https://api-sandbox.coterieinsurance.com/v1/commercial/applications";
 
-export const fetchBusinessData = () => (dispatch) => {
-  fetch(URL, {
-    method: "GET",
-    headers: {
-      "Content-Type": "/applications/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((businessData) => {
-      dispatch({ type: "FETCH_BUSINESS_DETAILS", businessData });
+export const fetchBusinessData = (businessData) => (dispatch) => {
+  axios
+    .post(URL, businessData)
+    .then((response) => {
+      dispatch({ type: "FETCH_BUSINESS_DATA", response });
     })
     .catch((err) => console.log(err));
 };

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { storeBusinessDetails } from "../authStore/actions/businessDetailsActions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Button from "@material-ui/core/Button";
 
 const styles = {
   button: {
@@ -33,7 +33,7 @@ export class FormBusinessDetails extends Component {
     const { values, handleChange, handleLocationChange } = this.props;
     return (
       <React.Fragment>
-        <AppBar title="Enter Business Details" />
+        <AppBar title="Enter Business Details" showMenuIconButton={false} />
         <TextField
           name="businessName"
           hintText="Enter Business Name"
@@ -56,7 +56,7 @@ export class FormBusinessDetails extends Component {
           defaultValue={values.industryId}
         >
           {this.jobs.map((job, i) => (
-            <MenuItem key={i} value={job.career || ""}>
+            <MenuItem key={i} value={job.value || ""}>
               {job.career}
             </MenuItem>
           ))}
@@ -70,12 +70,14 @@ export class FormBusinessDetails extends Component {
           defaultValue={values.locations[0].zip}
         />
         <br />
-        <RaisedButton
-          label="Continue"
-          primary={true}
+        <Button
+          variant="contained"
+          color="primary"
           style={styles.button}
           onClick={this.continue}
-        />
+        >
+          Continue
+        </Button>
       </React.Fragment>
     );
   }

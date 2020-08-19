@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import { List, ListItem } from "material-ui/List";
-import RaisedButton from "material-ui/RaisedButton";
 import { connect } from "react-redux";
 import axios from "axios";
+import Button from "@material-ui/core/Button";
+import { bindActionCreators } from "redux";
+import { fetchBusinessData } from "../authStore/actions/businessDataActions";
 
 const styles = {
   button: {
@@ -15,29 +17,46 @@ export class ConfirmInfo extends Component {
   state = {
     businessData: {},
     businessDetails: {},
+    availablePolicyTypes: "",
   };
 
   submit = (event) => {
     event.preventDefault();
     console.log(this.props);
-    // axios
-    //   .post(
-    //     "https://api-sandbox.coterieinsurance.com/v1/commercial/applications",
-    //     this.props,
-    //     {
-    //       headers: {
-    //         authorization: "token 73920c6f-d530-419c-87b3-4f4762e05e9d",
-    //       },
-    //     }
-    //   )
-    //   .then((newBusiness) => {
-    //     this.setState({
-    //       ...newBusiness.data,
-    //     });
-    //     console.log(newBusiness.data.availablePolicyTypes);
-    //     console.log(this.state);
-    //   })
-    //   .catch((err) => console.log({ err }));
+    axios
+      .post(
+        "https://api-sandbox.coterieinsurance.com/v1/commercial/applications",
+        this.props.businessData,
+        {
+          headers: {
+            authorization: "token 73920c6f-d530-419c-87b3-4f4762e05e9d",
+          },
+        }
+      )
+      .then((newBusiness) => {
+        const { businessData, businessDetails } = this.state;
+        if (
+          businessData.numEmployees > 0 &&
+          businessDetails.industryId !== 10391 &&
+          businessDetails.industryId !== 10415
+        ) {
+          this.setState({ availablePolicyTypes: "Business Owner Policy" });
+        } else if (
+          businessDetails.industryId === 10391 ||
+          businessDetails.industryId === 10415
+        ) {
+          this.setState({ availablePolicyTypes: "Professional Liability" });
+        } else {
+          this.setState({ availablePolicyTypes: "General Liability" });
+        }
+        this.setState({
+          // ...newBusiness.data,
+          ...this.state,
+          businessData: newBusiness.data,
+        });
+        console.log(this.state.availablePolicyTypes);
+      })
+      .catch((err) => console.log({ err }));
   };
 
   back = (e) => {
@@ -65,7 +84,10 @@ export class ConfirmInfo extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
-        <AppBar title="Confirm Business Information" />
+        <AppBar
+          title="Confirm Business Information"
+          showMenuIconButton={false}
+        />
         <List>
           <ListItem primaryText="Business Name" secondaryText={businessName} />
         </List>
@@ -99,18 +121,17 @@ export class ConfirmInfo extends Component {
             secondaryText={this.props.businessData.annualPayroll}
           />
         </List>
-        <RaisedButton
-          label="Back"
-          primary={true}
+        <Button
+          variant="contained"
+          color="primary"
           style={styles.button}
           onClick={this.back}
-        />
-        <RaisedButton
-          label="Submit"
-          primary={true}
-          style={styles.button}
-          onClick={this.submit}
-        />
+        >
+          Back
+        </Button>
+        <Button variant="contained" color="primary" onClick={this.submit}>
+          Submit
+        </Button>
       </React.Fragment>
     );
   }
@@ -119,8 +140,13 @@ export class ConfirmInfo extends Component {
 const mapStateToProps = (store) => {
   return {
     businessData: store.businessDataReducer.businessData,
-    businessDetails: store.businessDetailsReducer.businessDetails,
   };
 };
 
-export default connect(mapStateToProps, null)(ConfirmInfo);
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     fetchQuote: bindActionCreators(fetchBusinessData, dispatch),
+//   };
+// };
+
+export default connect(mapStateToProps)(ConfirmInfo);

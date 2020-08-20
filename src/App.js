@@ -1,22 +1,18 @@
 import React, { Component } from "react";
-// import { Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { QuoteForm } from "./components/QuoteForm";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
 import AppBar from "material-ui/AppBar";
 import styled from "styled-components";
-import { Link as RouterLink } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { borders } from "@material-ui/system";
 import "./App.css";
-
-const Title = styled.h1`
-  color: midnightblue;
-  margin: 100px;
-`;
+import { FormBusinessDetails } from "./components/FormBusinessDetails";
+import HomePage from "./components/HomePage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,20 +35,12 @@ const App = () => {
           alt="logo"
         />
       </nav>
-      <div className="main">
-        <div>
-          <Title>
-            Simplifying
-            <br /> Insurance for <br /> Businesses
-          </Title>
-        </div>
+      {/* <HomePage /> */}
 
-        <div className="button">
-          <Button variant="contained" color="primary" className={classes.root}>
-            Get Your Quote Now
-          </Button>
-        </div>
-      </div>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/quoteform" component={QuoteForm} />
+      </Switch>
     </MuiThemeProvider>
   );
 };

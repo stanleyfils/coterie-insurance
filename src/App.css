@@ -6,14 +6,18 @@ AppBar {
   margin: auto;
 }
 
+Button a:hover {
+  color: white;
+}
+
 .main {
   display: flex;
   justify-content: space-evenly;
-  /* position: absolute; */
   margin: auto;
 }
 
 nav {
   padding: 20px;
   border-bottom: 1px solid lightgray;
+  width: 100%;
 }

@@ -33,7 +33,7 @@ export class FormBusinessDetails extends Component {
     const { values, handleChange, handleLocationChange } = this.props;
     return (
       <React.Fragment>
-        {/* <AppBar title="Enter Business Details" showMenuIconButton={false} /> */}
+        <AppBar title="Enter Business Details" showMenuIconButton={false} />
         <TextField
           name="businessName"
           hintText="Enter Business Name"

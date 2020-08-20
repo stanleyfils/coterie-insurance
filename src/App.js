@@ -36,7 +36,7 @@ const App = () => {
           />
         </Link>
       </nav>
-      {/* <HomePage /> */}
+
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/quoteform" component={FloatingSection} />

@@ -6,6 +6,7 @@ AppBar {
 }
 Button a:hover {
   color: white;
+  text-decoration: none;
 }
 .main {
   display: flex;

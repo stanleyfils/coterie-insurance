@@ -1,23 +1,27 @@
 AppBar {
   background-color: white;
 }
-
 .button {
   margin: auto;
 }
-
 Button a:hover {
   color: white;
 }
-
 .main {
   display: flex;
   justify-content: space-evenly;
   margin: auto;
 }
-
 nav {
   padding: 20px;
   border-bottom: 1px solid lightgray;
   width: 100%;
+}
+.floating-main {
+  display: flex;
+  margin: auto;
+}
+.floating-section {
+  margin: auto;
+  padding-top: 20px;
 }

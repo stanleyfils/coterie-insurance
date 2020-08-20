@@ -1,0 +1,19 @@
+AppBar {
+  background-color: white;
+}
+
+.button {
+  margin: auto;
+}
+
+.main {
+  display: flex;
+  justify-content: space-evenly;
+  /* position: absolute; */
+  margin: auto;
+}
+
+nav {
+  padding: 20px;
+  border-bottom: 1px solid lightgray;
+}
